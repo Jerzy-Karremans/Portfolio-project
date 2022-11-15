@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>connect 4</title>
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body class="app">
+    <h1>jerzy's connect 4 game</h1>
+
+    <form id="input-name-form" class="form__group field">
+        <input maxlength="10" type="input" class="form__field" placeholder="Name" name="name" id='input-box' required />
+        <label for="name" class="form__label">Enter Username</label>
+    </form>
+    <p id="game-status" class="gameStatus"></p>
+    <div id="scoreboard-wrapper" class="scoreboard-wrapper"></div>
+    <div class="playfieldWrapper"></div>
+    <p id="turnNotifier"></p>
+        
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="src/client.js"></script>
+</body>
+</html>

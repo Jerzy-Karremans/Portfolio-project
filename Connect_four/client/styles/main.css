@@ -1,0 +1,154 @@
+:root{
+    --AmountOfColumns: 7;
+}
+
+.app {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1vw;
+    background-color: #014040;
+    color: #F27405;
+    margin: 0;
+}
+
+h1{
+    margin-bottom: 10px;
+}
+
+.scoreboard-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    justify-content: center;   
+}
+
+
+.fake-piece{
+    width: 3.5vw;
+    height: 3.5vw;
+    border-radius: 50%;
+    border: none;
+    margin-bottom: 1vw;
+}
+
+.gameStatus{
+    margin-top: 0;
+    padding-bottom: 1em;
+}
+
+.playfieldWrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1fr 1fr 1fr;
+    gap: 1vw;
+    justify-content: center;
+}
+
+.playfieldWrapper > div {
+    padding: 0.7vw;
+}
+
+.boardWrapper {
+    display: grid;
+    grid-template-columns: repeat(var(--AmountOfColumns),5.5vw);
+    background-color: #02735E;
+    border-radius: 2%;
+    grid-column: 2;
+    grid-row: 1;
+    gap: 0.5vw;
+}
+
+.piece {
+    border-radius: 50%;
+    border: none;
+    padding-top: 100%;
+    background-color: #014040;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.banner-wrapper{
+    flex: 1 1 auto;
+    min-width: 20vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+@media (max-width: 900px){
+    .boardWrapper{
+        grid-template-columns: repeat(var(--AmountOfColumns),12vw);
+        gap: 0.5vw;
+    }
+    .app{
+        font-size: 4vw;
+    }
+    .fake-piece{
+        width: 12vw;
+        height: 12vw;
+    }
+    h3{
+        margin-top: 3vw;
+    }
+}
+
+.form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 50%;
+}
+  
+.form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+.form__field::placeholder {
+    color: transparent;
+}
+.form__field:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+}
+  
+.form__label {
+    user-select: none;
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+  
+.form__field:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #11998e, #38ef7d);
+    border-image-slice: 1;
+}
+
+.form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
+    font-weight: 700;
+}
