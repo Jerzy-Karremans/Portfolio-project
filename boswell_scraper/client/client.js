@@ -27,8 +27,8 @@ function generateArticles(inputCsv) {
         }
     }
 }
-const sock = io()
-//var sock = io.connect('https://jerzykarremans.com', {path: "/socket.io2"});
+//const sock = io()
+var sock = io.connect('https://jerzykarremans.com', {path: "/socket.io2"});
 
 sock.emit("connection", "")
 sock.on("wettedLoad", generateArticles) 

@@ -25,7 +25,7 @@ const courseName = "Basis B + VWO Wiskunde B - Voorjaar 2023 (di/do/za)"
 io.on("connection", (sock) => 
 {
     console.log("client connected")
-    const python_process = spawner('python', ['./webscraper.py', url, courseName])
+    const python_process = spawner('python3', ['./webscraper.py', url, courseName])
     python_process.stdout.on('data', (data) => {
         console.log("loaded site")
         datesCsv = ReadCsv(data.toString())

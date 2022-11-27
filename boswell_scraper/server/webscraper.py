@@ -48,7 +48,7 @@ def parseStringsCSV(dates):
         for i in range(len(s)):
             if s[i] == "i":
                 time = s[:i-1]
-                room = s[i+3:].strip(")")
+                room = s[i+3:]
                 break
 
         returnDates += f"{day},{date},{time},{room}\n"
