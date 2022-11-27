@@ -8,19 +8,23 @@
     <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body class="app">
+    <header>
     <h1>jerzy's connect 4 game</h1>
-
+    <a href="https://jerzykarremans.com">Back to main page</a>
+    </header>
     <form id="input-name-form" class="form__group field">
         <input maxlength="10" type="input" class="form__field" placeholder="Name" name="name" id='input-box' required />
         <label for="name" class="form__label">Enter Username</label>
     </form>
+
+    
     <p id="game-status" class="gameStatus"></p>
     <div id="scoreboard-wrapper" class="scoreboard-wrapper"></div>
     <div class="playfieldWrapper"></div>
     <p id="turnNotifier"></p>
 
-    <a href="https://jerzykarremans.com">Back to main page</a>
-        
+    
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="src/client.js"></script>
 </body>

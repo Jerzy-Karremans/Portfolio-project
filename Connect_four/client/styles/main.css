@@ -1,5 +1,27 @@
-:root{
+:root {
     --AmountOfColumns: 7;
+}
+
+a {
+    background-color: red;
+    box-shadow: 0 5px 0 darkred;
+    color: white;
+    padding: 1em 1.5em;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    height: 18px;
+    margin-top: 20px;
+    margin-left: auto;
+}
+
+a:hover {
+    background-color: #ce0606;
+}
+
+a:active {
+    box-shadow: none;
+    top: 5px;
 }
 
 .app {
@@ -14,19 +36,27 @@
     margin: 0;
 }
 
-h1{
+header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+h1 {
     margin-bottom: 10px;
 }
 
-.scoreboard-wrapper{
+.scoreboard-wrapper {
     display: flex;
     flex-direction: row;
     gap: 0.5em;
-    justify-content: center;   
+    justify-content: center;
 }
 
 
-.fake-piece{
+.fake-piece {
     width: 3.5vw;
     height: 3.5vw;
     border-radius: 50%;
@@ -34,12 +64,12 @@ h1{
     margin-bottom: 1vw;
 }
 
-.gameStatus{
+.gameStatus {
     margin-top: 0;
     padding-bottom: 1em;
 }
 
-.playfieldWrapper{
+.playfieldWrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -48,13 +78,13 @@ h1{
     justify-content: center;
 }
 
-.playfieldWrapper > div {
+.playfieldWrapper>div {
     padding: 0.7vw;
 }
 
 .boardWrapper {
     display: grid;
-    grid-template-columns: repeat(var(--AmountOfColumns),5.5vw);
+    grid-template-columns: repeat(var(--AmountOfColumns), 5.5vw);
     background-color: #02735E;
     border-radius: 2%;
     grid-column: 2;
@@ -73,26 +103,29 @@ p {
     margin-bottom: 0;
 }
 
-.banner-wrapper{
+.banner-wrapper {
     flex: 1 1 auto;
     min-width: 20vw;
     margin-left: 1vw;
     margin-right: 1vw;
 }
 
-@media (max-width: 900px){
-    .boardWrapper{
-        grid-template-columns: repeat(var(--AmountOfColumns),12vw);
+@media (max-width: 900px) {
+    .boardWrapper {
+        grid-template-columns: repeat(var(--AmountOfColumns), 12vw);
         gap: 0.5vw;
     }
-    .app{
+
+    .app {
         font-size: 4vw;
     }
-    .fake-piece{
+
+    .fake-piece {
         width: 12vw;
         height: 12vw;
     }
-    h3{
+
+    h3 {
         margin-top: 3vw;
     }
 }
@@ -103,7 +136,7 @@ p {
     margin-top: 10px;
     width: 50%;
 }
-  
+
 .form__field {
     font-family: inherit;
     width: 100%;
@@ -116,15 +149,17 @@ p {
     background: transparent;
     transition: border-color 0.2s;
 }
+
 .form__field::placeholder {
     color: transparent;
 }
-.form__field:placeholder-shown ~ .form__label {
+
+.form__field:placeholder-shown~.form__label {
     font-size: 1.3rem;
     cursor: text;
     top: 20px;
 }
-  
+
 .form__label {
     user-select: none;
     position: absolute;
@@ -134,7 +169,7 @@ p {
     font-size: 1rem;
     color: #9b9b9b;
 }
-  
+
 .form__field:focus {
     padding-bottom: 6px;
     font-weight: 700;
@@ -143,7 +178,7 @@ p {
     border-image-slice: 1;
 }
 
-.form__field:focus ~ .form__label {
+.form__field:focus~.form__label {
     position: absolute;
     top: 0;
     display: block;
