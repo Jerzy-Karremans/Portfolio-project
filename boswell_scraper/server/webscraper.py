@@ -54,12 +54,15 @@ def parseStringsCSV(dates):
         returnDates += f"{day},{date},{time},{room}\n"
     return returnDates
 
-url = sys.argv[1]
-courseName = sys.argv[2]
+if sys.argv[1] == "fetch": 
+    url = sys.argv[2]
+    courseName = sys.argv[3]
 
-dates = GetLessonDates(url,courseName)
+    dates = GetLessonDates(url,courseName)
 
-outputcsv = parseStringsCSV(dates)
+    outputcsv = parseStringsCSV(dates)
 
-print(outputcsv)
-sys.stdout.flush()
+    print(outputcsv)
+    sys.stdout.flush()
+elif sys.argv[1] == "get":
+    pass

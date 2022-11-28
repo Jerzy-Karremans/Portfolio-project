@@ -7,6 +7,11 @@ function generateText(tag, text, article) {
 
 function generateArticles(inputCsv) {
     const articleWrapper = document.querySelector("#article-wrapper")
+    if(articleWrapper.hasChildNodes()){
+        while (articleWrapper.firstChild) {
+            articleWrapper.removeChild(articleWrapper.lastChild);
+        }
+    }
     for (let i = 0; i < inputCsv.length; i++) {
         const today = new Date()
         const [day, month, year] = inputCsv[i][1].split('-')
@@ -23,12 +28,13 @@ function generateArticles(inputCsv) {
             }
             generateText("h5", inputCsv[i][2], article)
             generateText("h6", inputCsv[i][1], article)
-            generateText("h6", inputCsv[i][3], article)
+            generateText("h6", inputCsv[i][3].replace(/[{()}]/g, ''), article)
         }
     }
+    console.log("siteLoad")
 }
 //const sock = io()
 var sock = io.connect('https://jerzykarremans.com', {path: "/socket.io2"});
 
 sock.emit("connection", "")
-sock.on("wettedLoad", generateArticles) 
+sock.on("siteLoad", generateArticles) 

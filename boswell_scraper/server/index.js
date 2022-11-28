@@ -19,16 +19,24 @@ function ReadCsv(inputCSV){
     return lines
 }
 
+const pythonVer = "python3"
 const url = "https://www.boswell-beta.nl/vwo/wiskunde-b"
 const courseName = "Basis B + VWO Wiskunde B - Voorjaar 2023 (di/do/za)"
+let datesCsv;
+const python_process = spawner(pythonVer, ['./webscraper.py',"fetch", url, courseName])
+python_process.stdout.on('data', (data) => {
+    console.log("loaded site")
+    datesCsv = ReadCsv(data.toString())
+})
 
 io.on("connection", (sock) => 
 {
+    sock.emit("siteLoad",datesCsv)
     console.log("client connected")
-    const python_process = spawner('python3', ['./webscraper.py', url, courseName])
+    const python_process = spawner(pythonVer, ['./webscraper.py',"fetch", url, courseName])
     python_process.stdout.on('data', (data) => {
         console.log("loaded site")
         datesCsv = ReadCsv(data.toString())
-        sock.emit("wettedLoad", datesCsv)
+        sock.emit("siteLoad", datesCsv)
     })
 })
