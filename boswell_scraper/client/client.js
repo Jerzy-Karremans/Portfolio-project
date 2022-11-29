@@ -14,12 +14,15 @@ function generateArticles(inputCsv) {
     }
     for (let i = 0; i < inputCsv.length; i++) {
         const today = new Date()
+        today.setHours(0, 0, 0, 0)
         const [day, month, year] = inputCsv[i][1].split('-')
         const date = new Date(+year, +month - 1, +day)
         if(today <= date){
             let article = document.createElement("article")
             articleWrapper.append(article)
-            if(date == today){
+            if(date.getDate() == today.getDate() 
+            && date.getMonth() == today.getMonth()
+            && today.getFullYear() == date.getFullYear()){
                 article.style.backgroundColor = "#5E81FF"
                 generateText("h4", "Vandaag", article)
             }
