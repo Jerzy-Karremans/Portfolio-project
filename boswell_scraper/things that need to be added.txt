@@ -1,6 +1,0 @@
-save dates in database
-and wetten them after a call
-than update the user with that call
-
-**make it so user can choose course
-**make it so users can choose a subject

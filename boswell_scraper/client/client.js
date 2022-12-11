@@ -6,6 +6,9 @@ function generateText(tag, text, article) {
 }
 
 function generateArticles(inputCsv) {
+    if(!inputCsv){
+        return
+    }
     const articleWrapper = document.querySelector("#article-wrapper")
     if(articleWrapper.hasChildNodes()){
         while (articleWrapper.firstChild) {
@@ -36,8 +39,22 @@ function generateArticles(inputCsv) {
     }
     console.log("siteLoad")
 }
-//const sock = io()
-var sock = io.connect('https://jerzykarremans.com', {path: "/socket.io2"});
+
+function courseNamesLoad(names){
+    if(!names){
+        return
+    }
+    console.log(names)
+}
+
+const sock = io()
+//var sock = io.connect('https://jerzykarremans.com', {path: "/socket.io2"});
 
 sock.emit("connection", "")
-sock.on("siteLoad", generateArticles) 
+let courseChosen = "VWO Wiskunde B - Najaarscursus 2022 (ma/wo/za) (hybride)"
+if(courseChosen){
+    sock.emit("courseChosen",courseChosen)
+}
+
+sock.on("dateLoad", generateArticles) 
+sock.on("courseNamesLoad",courseNamesLoad)

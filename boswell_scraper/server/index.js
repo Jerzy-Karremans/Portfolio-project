@@ -10,33 +10,31 @@ server.on("error", (err) => console.error(err))
 server.listen(port, () => console.log(`serving ${port}`))
 const io = socketIO(server)
 
-function ReadCsv(inputCSV){
-    lines = inputCSV.split("\n").slice(1,-2)
-    for(let i = 0; i < lines.length; i++){
-        line = lines[i].slice(0,-1).split(",")
-        lines[i] = line
-    }   
-    return lines
-}
-
-const pythonVer = "python3"
+const pythonVer = "python"
 const url = "https://www.boswell-beta.nl/vwo/wiskunde-b"
-const courseName = "Basis B + VWO Wiskunde B - Voorjaar 2023 (di/do/za)"
-let datesCsv;
-const python_process = spawner(pythonVer, ['./webscraper.py',"fetch", url, courseName])
-python_process.stdout.on('data', (data) => {
-    console.log("loaded site")
-    datesCsv = ReadCsv(data.toString())
-})
 
+let datesJson
+function refreshDatesForUrl(url,courseChosen,sock = null){
+    const python_process = spawner(pythonVer, ['./webscraper.py', url])
+    python_process.stdout.on('data', (data) => {
+        console.log("site Load Completed")
+        datesJson = JSON.parse(data)
+        if(sock){
+            sock.emit("dateLoad",datesJson[courseChosen])
+        }
+    })
+}  
+
+refreshDatesForUrl(url)
 io.on("connection", (sock) => 
 {
-    sock.emit("siteLoad",datesCsv)
     console.log("client connected")
-    const python_process = spawner(pythonVer, ['./webscraper.py',"fetch", url, courseName])
-    python_process.stdout.on('data', (data) => {
-        console.log("loaded site")
-        datesCsv = ReadCsv(data.toString())
-        sock.emit("siteLoad", datesCsv)
+    sock.on("courseChosen",(courseNameChosen) =>{
+        console.log(`client chose ${courseNameChosen}`)
+        if(datesJson){
+            sock.emit("dateLoad",datesJson[courseNameChosen])
+            sock.emit("courseNamesLoad",Object.keys(datesJson))
+        }
+        refreshDatesForUrl(url,sock)
     })
 })
