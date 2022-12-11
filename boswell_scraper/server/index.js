@@ -14,27 +14,40 @@ const pythonVer = "python"
 const url = "https://www.boswell-beta.nl/vwo/wiskunde-b"
 
 let datesJson
-function refreshDatesForUrl(url,courseChosen,sock = null){
+function refreshDatesForUrl(url){
     const python_process = spawner(pythonVer, ['./webscraper.py', url])
     python_process.stdout.on('data', (data) => {
-        console.log("site Load Completed")
+        console.log(`\n\n\n${getTime()}       SITE LOADED!!!!\n\n\n`)
         datesJson = JSON.parse(data)
-        if(sock){
-            sock.emit("dateLoad",datesJson[courseChosen])
-        }
+        io.emit("refreshDataRequest")
     })
 }  
 
-refreshDatesForUrl(url)
+var lastTime = 0;
+function getInfo(sock) {
+    if (!(Math.round(new Date() - lastTime)/60000 < 5) ) {
+        refreshDatesForUrl(url,sock)
+        lastTime =  new Date();
+    }
+}
+
+function getTime(){
+    return new Date().toJSON().slice(11,19)
+}
+
 io.on("connection", (sock) => 
 {
-    console.log("client connected")
+    console.log(`${getTime()}       client connected`)
+    getInfo(sock)
     sock.on("courseChosen",(courseNameChosen) =>{
-        console.log(`client chose ${courseNameChosen}`)
+        console.log(`${getTime()}       client chose <${courseNameChosen}>`)
         if(datesJson){
             sock.emit("dateLoad",datesJson[courseNameChosen])
             sock.emit("courseNamesLoad",Object.keys(datesJson))
         }
-        refreshDatesForUrl(url,sock)
+    })
+
+    sock.on("getCourses",() =>{
+        sock.emit("courseNamesLoad",Object.keys(datesJson))
     })
 })

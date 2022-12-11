@@ -37,24 +37,62 @@ function generateArticles(inputCsv) {
             generateText("h6", inputCsv[i][3].replace(/[{()}]/g, ''), article)
         }
     }
-    console.log("siteLoad")
+    console.log("hi")
+}
+
+function toggle(obj)
+{
+    var item = document.getElementById(obj);
+    if(item.style.visibility == 'visible') { item.style.visibility = 'hidden'; }
+    else { item.style.visibility = 'visible'; }
 }
 
 function courseNamesLoad(names){
     if(!names){
         return
     }
-    console.log(names)
+    dropdown = document.querySelector("#courseDropdown")
+    if(dropdown.hasChildNodes()){
+        while (dropdown.firstChild) {
+            dropdown.removeChild(dropdown.lastChild);
+        }
+    }
+    names.forEach(element => {
+        courseTitleElm = document.createElement("option")
+        courseTitleElm.innerHTML = element
+        //courseTitleElm.setAtribute("onselect", "console.log(this.innerHTML)")
+        if(element == courseChosen){
+            courseTitleElm.selected = "selected"
+        }
+        dropdown.append(courseTitleElm)
+    })
+}
+
+function selectedCourseSwapped(){
+    const e = document.querySelector("#courseDropdown")
+    let text = e.options[e.selectedIndex].text
+    sock.emit("courseChosen",text)
+    courseChosen = text
+    document.cookie = courseChosen
 }
 
 const sock = io()
 //var sock = io.connect('https://jerzykarremans.com', {path: "/socket.io2"});
 
 sock.emit("connection", "")
-let courseChosen = "VWO Wiskunde B - Najaarscursus 2022 (ma/wo/za) (hybride)"
-if(courseChosen){
+let courseChosen;
+if(document.cookie){
+    courseChosen = document.cookie
     sock.emit("courseChosen",courseChosen)
+}
+else{
+    sock.emit("getCourses")
 }
 
 sock.on("dateLoad", generateArticles) 
 sock.on("courseNamesLoad",courseNamesLoad)
+sock.on("refreshDataRequest",() => {
+    if(courseChosen){
+        sock.emit("courseChosen",courseChosen)
+    }
+})
