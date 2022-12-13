@@ -1,3 +1,11 @@
+function clearChildren(element){
+    if(element.hasChildNodes()){
+        while (element.firstChild) {
+            element.removeChild(element.lastChild);
+        }
+    }
+}
+
 function generateText(tag, text, article) {
     elm = document.createElement(tag)
     elm.className = "articleText"
@@ -10,11 +18,7 @@ function generateArticles(inputCsv) {
         return
     }
     const articleWrapper = document.querySelector("#article-wrapper")
-    if(articleWrapper.hasChildNodes()){
-        while (articleWrapper.firstChild) {
-            articleWrapper.removeChild(articleWrapper.lastChild);
-        }
-    }
+    clearChildren(articleWrapper)
     for (let i = 0; i < inputCsv.length; i++) {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
@@ -40,11 +44,13 @@ function generateArticles(inputCsv) {
     console.log("hi")
 }
 
-function toggle(obj)
-{
-    var item = document.getElementById(obj);
-    if(item.style.visibility == 'visible') { item.style.visibility = 'hidden'; }
-    else { item.style.visibility = 'visible'; }
+function addOption(name,dropdown){
+    courseTitleElm = document.createElement("option")
+    courseTitleElm.innerHTML = name
+    if(name == courseChosen){
+        courseTitleElm.selected = "selected"
+    }
+    dropdown.append(courseTitleElm)
 }
 
 function courseNamesLoad(names){
@@ -52,20 +58,10 @@ function courseNamesLoad(names){
         return
     }
     dropdown = document.querySelector("#courseDropdown")
-    if(dropdown.hasChildNodes()){
-        while (dropdown.firstChild) {
-            dropdown.removeChild(dropdown.lastChild);
-        }
-    }
-    names.forEach(element => {
-        courseTitleElm = document.createElement("option")
-        courseTitleElm.innerHTML = element
-        //courseTitleElm.setAtribute("onselect", "console.log(this.innerHTML)")
-        if(element == courseChosen){
-            courseTitleElm.selected = "selected"
-        }
-        dropdown.append(courseTitleElm)
-    })
+    clearChildren(dropdown)
+    addOption("Select Course",dropdown)
+    names.forEach(name => addOption(name,dropdown))
+    
 }
 
 function selectedCourseSwapped(){
@@ -84,9 +80,7 @@ let courseChosen;
 if(document.cookie){
     courseChosen = document.cookie
     sock.emit("courseChosen",courseChosen)
-}
-else{
-    sock.emit("getCourses")
+    courseNamesLoad([courseChosen])
 }
 
 sock.on("dateLoad", generateArticles) 
@@ -94,5 +88,8 @@ sock.on("courseNamesLoad",courseNamesLoad)
 sock.on("refreshDataRequest",() => {
     if(courseChosen){
         sock.emit("courseChosen",courseChosen)
+    }
+    else{
+        sock.emit("getCourses")
     }
 })

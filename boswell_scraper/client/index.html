@@ -15,8 +15,10 @@
         <a href="https://www.boswell-beta.nl/" class="logo">
             Boswell-Bèta
         </a>
-        <div class="header-right">
-            <select id="courseDropdown" onchange="selectedCourseSwapped()"></select>
+        <div class="custom-select">
+            <select id="courseDropdown" onchange="selectedCourseSwapped()" style="width:200px;">
+                <option value="0">Select Course</option>
+            </select>
         </div>
     </header>
     <ul id="article-wrapper"></ul>

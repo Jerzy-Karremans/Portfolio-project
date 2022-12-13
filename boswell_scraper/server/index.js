@@ -25,7 +25,7 @@ function refreshDatesForUrl(url){
 
 var lastTime = 0;
 function getInfo(sock) {
-    if (!(Math.round(new Date() - lastTime)/60000 < 5) ) {
+    if (!(Math.round(new Date() - lastTime)/60000 < 10) ) {
         refreshDatesForUrl(url,sock)
         lastTime =  new Date();
     }
@@ -38,12 +38,15 @@ function getTime(){
 io.on("connection", (sock) => 
 {
     console.log(`${getTime()}       client connected`)
+    if(datesJson){
+        sock.emit("courseNamesLoad",Object.keys(datesJson))
+    }
+
     getInfo(sock)
     sock.on("courseChosen",(courseNameChosen) =>{
         console.log(`${getTime()}       client chose <${courseNameChosen}>`)
         if(datesJson){
             sock.emit("dateLoad",datesJson[courseNameChosen])
-            sock.emit("courseNamesLoad",Object.keys(datesJson))
         }
     })
 
