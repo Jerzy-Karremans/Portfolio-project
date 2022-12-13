@@ -1,11 +1,10 @@
 rucksacks = open("day3_input.txt","r").read().split("\n")
 sum = 0
-for i in range(len(rucksacks)):
-    compartment1 = rucksacks[i][:len(rucksacks[i])//2]
-    compartment2 = rucksacks[i][len(rucksacks[i])//2:]
-    for j in range(len(compartment1)):
-        if compartment2[j] in compartment1:
-            letterIndex = ord(compartment2[j])-96
+for group in range(0,len(rucksacks),3):
+    groupSacks = rucksacks[group:group+3]
+    for char in groupSacks[0]:
+        if char in groupSacks[1] and char in groupSacks[2]:
+            letterIndex = ord(char)-96
             if letterIndex > 0:
                 sum += letterIndex
             else:
