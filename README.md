@@ -1,4 +1,4 @@
-# Udemy-portfolio-project
+# Udemy-portfolio-projects
 
 ## dev log
 a devlog for the small projects i make in this portfolio.
